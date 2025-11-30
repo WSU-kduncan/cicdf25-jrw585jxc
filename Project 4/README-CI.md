@@ -13,27 +13,59 @@ I used generative AI to create a site with a star wars theme.
 
 ![Screenshot 2025-11-14 at 4.37.12 PM.png](images/Screenshot_2025-11-14_at_4.37.12_PM.png)
 
-Created a `Dockerfile` with the following two instructions:
+Created a `Dockerfile` with the following three instructions:
 
 - FROM httpd:2.4
-- COPY html/ /usr/local/apache2/htdocs/ 
+- COPY web-content/ /usr/local/apache2/htdocs/
 - EXPOSE 80
-
-Tested that the docker file pulled the files successfully
-
-![Screenshot 2025-11-14 at 5.02.08 PM.png](images/Screenshot_2025-11-14_at_5.02.08_PM.png)
 
 Built and tagged a container image using my `Dockerfile` as the build instructions
 
-![Screenshot 2025-11-14 at 5.08.41 PM.png](images/Screenshot_2025-11-14_at_5.08.41_PM.png)
+![Screenshot 2025-11-30 at 4.03.54 PM.png](<images/Screenshot 2025-11-30 at 4.03.54 PM.png>)
+
+Tested that the docker file pulled the files successfully
+
+![Screenshot 2025-11-30 at 4.03.54 PM.png](<images/Screenshot 2025-11-30 at 4.03.54 PM.png>)
+
+![Screenshot 2025-11-30 at 4.06.37 PM.png](<images/Screenshot 2025-11-30 at 4.06.37 PM.png>)
+
+**Create Docker Hub access token (PAT)/Add GitHub repository secrets**
+
+Created Docker Hub access token (PAT)
+
+*Account Settings → Security → New Access Token.*
+
+Name: github-actions -project4
 
 1. Logged into DockerHub on the command line using Personal Access Token (PAT) instead of a password. (I created an alias called dockerlogin to do so quickly)
 2. Pushed container image to a **public** DockerHub repository in my account.
     
-    ![Screenshot 2025-11-14 at 5.17.51 PM.png](images/Screenshot_2025-11-14_at_5.17.51_PM.png)
-    
+    ![Screenshot 2025-11-30 at 4.10.06 PM.png](<images/Screenshot 2025-11-30 at 4.10.06 PM.png>)
 
-**Part 2 - CloudFormation Template TODOs**
+
+Added GitHub repository secrets
+
+1. Settings → Secrets and variables → Actions.
+2. New repository secret and create:
+3. dockeruser → value = username
+4. dockertoken → value = token
+
+![images/Screenshot 2025-11-30 at 4.31.39 PM.png](<images/Screenshot 2025-11-30 at 4.31.39 PM.png>)
+
+Built Workflow
+
+[workflow.yml](.github/workflows/workflow.yml)
+
+1. Logs in using github secrets
+
+![images/Screenshot 2025-11-30 at 4.37.01 PM.png](<images/Screenshot 2025-11-30 at 4.37.01 PM.png>)
+
+Tested it works
+
+
+
+
+
 
 Copied [`lb-cf-template.yml`](https://github.com/pattonsgirl/CEG3120/blob/main/Projects/Project3/lb-cf-template.yml) to my `Project3` folder.  Named it `Coomer-lb-cf.yml`
 
