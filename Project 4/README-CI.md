@@ -27,7 +27,7 @@ Tested that the docker file pulled the files successfully
 
 ![images/Screenshot 2025-11-30 at 5.50.51 PM.png](<images/Screenshot 2025-11-30 at 5.50.51 PM.png>)
 
-**Create Docker Hub access token (PAT)/Add GitHub repository secrets**
+**Part 2: Create Docker Hub access token (PAT)/Add GitHub repository secrets**
 
 Created Docker Hub access token (PAT)
 
@@ -53,8 +53,8 @@ Added GitHub repository secrets
 ![images/Screenshot 2025-11-30 at 5.49.02 PM.png](<images/Screenshot 2025-11-30 at 5.49.02 PM.png>)
 
 Built Workflow
+[secret_workflow.yml](../.github/workflows/secret_workflow.yml)
 
-[](.github/workflows/workflow.yml)
 
 1. Logs in using github secrets
 
@@ -65,11 +65,28 @@ Tested it works
 ![images/Screenshot 2025-11-30 at 5.56.03 PM.png](<images/Screenshot 2025-11-30 at 5.56.03 PM.png>)
 
 
+**Part 3 - Semantic Versioning**
+
+Added versioning to secret_workflow.yml
 
 
+on:
+push:
+tags:
+     - 'v*.*.*'
 
 
+tags: |
+type=semver,pattern=latest
+type=semver,pattern={{major}}
+type=semver,pattern={{major}}.{{minor}}
 
+
+github command to tag and push tag
+![images/Screenshot 2025-11-30 at 6.12.56 PM.png](<images/Screenshot 2025-11-30 at 6.12.56 PM.png>)
+
+Docker correctly pulling major minor and latest
+![images/Screenshot 2025-11-30 at 6.15.04 PM.png](<images/Screenshot 2025-11-30 at 6.15.04 PM.png>)
 
 
 
