@@ -35,6 +35,8 @@ Created Docker Hub access token (PAT)
 
 Name: github-actions -project4
 
+Read and write as scope
+
 1. Logged into DockerHub on the command line using Personal Access Token (PAT) instead of a password. (I created an alias called dockerlogin to do so quickly)
 2. Pushed container image to a **public** DockerHub repository in my account.
     
