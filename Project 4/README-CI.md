@@ -21,13 +21,11 @@ Created a `Dockerfile` with the following three instructions:
 
 Built and tagged a container image using my `Dockerfile` as the build instructions
 
-![Screenshot 2025-11-30 at 4.03.54 PM.png](<images/Screenshot 2025-11-30 at 4.03.54 PM.png>)
+![images/Screenshot 2025-11-30 at 5.54.59 PM.png](<images/Screenshot 2025-11-30 at 5.54.59 PM.png>)
 
 Tested that the docker file pulled the files successfully
 
-![Screenshot 2025-11-30 at 4.03.54 PM.png](<images/Screenshot 2025-11-30 at 4.03.54 PM.png>)
-
-![Screenshot 2025-11-30 at 4.06.37 PM.png](<images/Screenshot 2025-11-30 at 4.06.37 PM.png>)
+![images/Screenshot 2025-11-30 at 5.50.51 PM.png](<images/Screenshot 2025-11-30 at 5.50.51 PM.png>)
 
 **Create Docker Hub access token (PAT)/Add GitHub repository secrets**
 
@@ -40,7 +38,7 @@ Name: github-actions -project4
 1. Logged into DockerHub on the command line using Personal Access Token (PAT) instead of a password. (I created an alias called dockerlogin to do so quickly)
 2. Pushed container image to a **public** DockerHub repository in my account.
     
-    ![Screenshot 2025-11-30 at 4.10.06 PM.png](<images/Screenshot 2025-11-30 at 4.10.06 PM.png>)
+![images/Screenshot 2025-11-30 at 5.50.51 PM.png](<images/Screenshot 2025-11-30 at 5.50.51 PM.png>)
 
 
 Added GitHub repository secrets
@@ -50,17 +48,23 @@ Added GitHub repository secrets
 3. dockeruser → value = username
 4. dockertoken → value = token
 
-![images/Screenshot 2025-11-30 at 4.31.39 PM.png](<images/Screenshot 2025-11-30 at 4.31.39 PM.png>)
+![images/Screenshot 2025-11-30 at 5.49.02 PM.png](<images/Screenshot 2025-11-30 at 5.49.02 PM.png>)
 
 Built Workflow
 
-[workflow.yml](.github/workflows/workflow.yml)
+[](.github/workflows/workflow.yml)
 
 1. Logs in using github secrets
 
-![images/Screenshot 2025-11-30 at 4.37.01 PM.png](<images/Screenshot 2025-11-30 at 4.37.01 PM.png>)
-
 Tested it works
+
+![images/Screenshot 2025-11-30 at 5.43.38 PM.png](<images/Screenshot 2025-11-30 at 5.43.38 PM.png>)
+
+![images/Screenshot 2025-11-30 at 5.56.03 PM.png](<images/Screenshot 2025-11-30 at 5.56.03 PM.png>)
+
+
+
+
 
 
 
