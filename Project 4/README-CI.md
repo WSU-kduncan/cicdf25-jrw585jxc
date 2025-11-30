@@ -88,6 +88,12 @@ github command to tag and push tag
 Docker correctly pulling major minor and latest
 ![images/Screenshot 2025-11-30 at 6.15.04 PM.png](<images/Screenshot 2025-11-30 at 6.15.04 PM.png>)
 
+https://hub.docker.com/repository/docker/jrw585jxc/project4/general
+
+
+
+
+
 
 
 Copied [`lb-cf-template.yml`](https://github.com/pattonsgirl/CEG3120/blob/main/Projects/Project3/lb-cf-template.yml) to my `Project3` folder.  Named it `Coomer-lb-cf.yml`
