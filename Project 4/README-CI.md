@@ -1,7 +1,7 @@
-# README.md
-**Part 1 - Create a Docker Image**
+# README-Cl.md
+**Part 1: Create a Docker Image**
 
-1. In the `Project4` folder, added `web-content` from Project 3 with the following:
+1. In the [Project4](cicdf25-jrw585jxc/Project 4) folder, added [web-content](cicdf25-jrw585jxc/Project 4/web-content) from Project 3 with the following:
     - index.html
     - about.html
     - style.css
@@ -13,13 +13,13 @@ I used generative AI to create a site with a star wars theme.
 
 ![Screenshot 2025-11-14 at 4.37.12 PM.png](images/Screenshot_2025-11-14_at_4.37.12_PM.png)
 
-Created a `Dockerfile` with the following three instructions:
+Created a [Dockerfile](cicdf25-jrw585jxc/Project 4/Dockerfile) with the following three instructions:
 
 - FROM httpd:2.4
 - COPY web-content/ /usr/local/apache2/htdocs/
 - EXPOSE 80
 
-Built and tagged a container image using my `Dockerfile` as the build instructions
+Built and tagged a container image using my [Dockerfile](cicdf25-jrw585jxc/Project 4/Dockerfile) as the build instructions
 
 ![images/Screenshot 2025-11-30 at 5.54.59 PM.png](<images/Screenshot 2025-11-30 at 5.54.59 PM.png>)
 
@@ -55,26 +55,40 @@ Added GitHub repository secrets
 Built Workflow
 [secret_workflow.yml](../.github/workflows/secret_workflow.yml)
 
+*Note: if used in another repository, location of Dockerfile needs to be update in .yml to work with github actions*
 
 1. Logs in using github secrets
 
-Tested it works
+2. You can test it by going to actions, and seeing if any errors or present. When clicking on the workflow, it shows all parts functioned. 
+
+Tested and working
 
 ![images/Screenshot 2025-11-30 at 5.43.38 PM.png](<images/Screenshot 2025-11-30 at 5.43.38 PM.png>)
 
 ![images/Screenshot 2025-11-30 at 5.56.03 PM.png](<images/Screenshot 2025-11-30 at 5.56.03 PM.png>)
 
 
-**Part 3 - Semantic Versioning**
+**Part 3: Semantic Versioning**
 
-Added versioning to secret_workflow.yml
+Added versioning to [secret_workflow.yml](cicdf25-jrw585jxc/.github/workflows/secret_workflow.yml)
+
+1. To see tags in a git repository: git tag -n
+2. To generate a tag in a git repository: git tag -a vX.X.X -m "Version X.X.X"
+3. To push a tag in a git repository to GitHub: git push origin vX.X.X
+
+
+1. The workflow triggers on push
+2. Then names the docker image according to the tags on latest push
+
+*Note: if used in another repository, location of Dockerfile needs to be update in .yml to work with github actions*
+
+3. You can test it by going to actions, and seeing if any errors or present. When clicking on the workflow, it shows all parts functioned.
 
 
 on:
 push:
 tags:
      - 'v*.*.*'
-
 
 tags: |
 type=semver,pattern=latest
@@ -85,104 +99,28 @@ type=semver,pattern={{major}}.{{minor}}
 github command to tag and push tag
 ![images/Screenshot 2025-11-30 at 6.12.56 PM.png](<images/Screenshot 2025-11-30 at 6.12.56 PM.png>)
 
+You can check for success by going to the related docker hub and see the updated versions
+
 Docker correctly pulling major minor and latest
 ![images/Screenshot 2025-11-30 at 6.15.04 PM.png](<images/Screenshot 2025-11-30 at 6.15.04 PM.png>)
 
 https://hub.docker.com/repository/docker/jrw585jxc/project4/general
 
 
+**Part 4: Diagram**
 
 
 
 
 
-Copied [`lb-cf-template.yml`](https://github.com/pattonsgirl/CEG3120/blob/main/Projects/Project3/lb-cf-template.yml) to my `Project3` folder.  Named it `Coomer-lb-cf.yml`
 
-Made the modifications as specified in project description below:
 
-1. Use AMI of your choice that is Ubuntu 18+ or Amazon Linux 2+
-2. VPC CIDR block: `192.168.0.0/23`
-3. Public subnet range: `192.168.0.0 - 192.168.0.255`
-4. Private subnet range: `192.168.1.0 - 192.168.1.255`
-5. Modifications for Security Group:
-    - Allow `ssh` requests within VPC CIDR block
-    - Allow `ssh` requests from your home IP
-    - Allow `ssh` requests from Wright State IP block (`130.108.0.0/16`)
-    - Allow `http` requests from within VPC CIDR block
-    - Allow `http` requests from any IP
-    - *If doing Extra Credit* add `https` rules **in addition to** `http` rules
-- assign private IP on the public subnet
-- use instance `UserData` to configure a unique `hostname` on the instance
-- use instance `UserData` to install `haproxy`
-    - depending on AMI, also perform steps to start & enable service
 
-Create three host instances (one is templated, two more need to be added)
 
-- tag each with a unique Name Value
-- assign each a private IP on the private subnet
-- use instance `UserData` to configure a unique `hostname` on the instance
-- install docker
-- pull and run your DockerHub image in detached mode bound to host
-port 80 and container port 80. Use the appropriate flag to have the
-container restart automatically if the system is rebooted / if the
-docker service has an outage.
+**Citations / resources used**
 
-**Part 3 - Setup Proxy Server**
+No additional resources were used outside of perplexity in project3 for generation of the html/css. Used various resources linked in the github for the project, mostly those listed below.
 
-Configured proxy server per the requirements specified in project description.
-
-Used the following resources, was very helpful.
-
-[https://www.haproxy.com/blog/haproxy-ssl-termination](https://www.haproxy.com/blog/haproxy-ssl-termination)
-
-[https://www.tecmint.com/configure-ssl-certificate-haproxy/](https://www.tecmint.com/configure-ssl-certificate-haproxy/)
-
-**README**
-
-1. Project description
-    - The goal of the project is to build a container image from Apache's httpd with web content and publish it to DockerHub. Then, modify the project CF template to meet requirements for this project to then run the website container on hosts in the pool. Then configure `haproxy` as a load balancer / application delivery controller to direct traffic to the pool
-    - Once the CF template is configured, you go to **AWS → Cloudformation → Create Stack → With new resources → and then select your template**. Then It begins creating the stack with your desired configurations
-    - The template builds a variety of resources
-        - **VPC:** A custom VPC with CIDR block 192.168.0.0/23 with public and private subnets
-        - **Internet Gateway:** Allowing public internet access into the VPC resources within the public subnet.
-        - **Public Subnet**: Subnet (192.168.0.0/24) configured to assign the public IPs to instances for access externally.
-        - **Private Subnet:** Subnet (192.168.1.0/24) with no direct public IPs for backend resources.
-        - **NAT Gateway:** In the public subnet with an Elastic IP to enable private subnet instances to access the internet securely for updates etc.
-        - **Route Tables:** Public route table directs internet-bound traffic to the Internet Gateway; Private route table routes through NAT Gateway.
-        - **Security Group:** Defines firewall rules allowing SSH, HTTP, and HTTPS from specified IP ranges including internal VPC CIDR and external trusted IPs.
-        - **EC2 Instances:**
-            - **Proxy Instance:** Located in the public subnet, runs HAProxy as the reverse proxy/load balancer.
-            - **WebServ1, WebServ2, WebServ3:** Three backend servers in the private subnet, each runing Docker with the “project3" container web services on port 80.
-2. **Building a web service container:**
-    - The [web-content](./web-content/) has a home(index) page, and about page, and a style.css included.
-    - The [dockerfile](./dockerfile) sets the container to be an Apache HTTP Server image, and pulls the web-contents folder into the proper place in the container
-    - Security -> Personal Access Tokens -> Create New Access Token
-    - Token scope: Read & Write
-    - [Docker image on docker hub](https://hub.docker.com/repository/docker/jrw585jxc/project3/general)
-3. **Connections to instances within the VPC:**
-    - The purpose of configuring hosts/.ssh is to more easily connect without each time entering the key and other parameters.
-    - In this case, I set up a config for the main proxy instance, and then ssh’d into the webservers from that instance manually.
-4. **Setting up the HAProxy load balancing instance:**
-    - Located /etc/haproxy/haproxy.cfg
-    - Allows me to configure settings, in this case it allowed me to setup the frontend and backend.
-    - [haproxy.cfg](./haproxy.cfg)
-    - You can run sudo haproxy -c -f /etc/haproxy/haproxy.cfg to check the status without restarting
-    - sudo systemctl <keywork> haproxy
-        - start, stop, restart reload
-5. **Prove the load balancer is working:**
-    - I initially ran into the issue that all 3 showed red and non functioning. I realized after a long time that my docker image hadn’t initially been created with support for linux architecture having created it on a mac.
-    - I fixed this by running: 
-    **“docker buildx build --platform linux/amd64,linux/arm64 -t jrw585jxc/project3:coomer --push .”**
-    - I ran the following command on all 3 web servers:
-    **sudo docker run -d --name project3 --restart unless-stopped -p 80:80 jrw585jxc/project3:coomer**
-        
-        ![Screenshot 2025-11-14 at 8.57.39 PM.png](images/Screenshot_2025-11-14_at_8.57.39_PM.png)
-        
-    
-6. **Citations / resources used**
-
-[https://www.haproxy.com/blog/haproxy-ssl-termination](https://www.haproxy.com/blog/haproxy-ssl-termination)
-
-[https://www.tecmint.com/configure-ssl-certificate-haproxy/](https://www.tecmint.com/configure-ssl-certificate-haproxy/)
-
-[https://docs.docker.com/build/building/multi-platform/](https://docs.docker.com/build/building/multi-platform/)
+https://github.com/docker/metadata-action?tab=readme-ov-file#semver - helped me create and debug "secret-workflow.yml
+https://semver.org/ - Helped ensure I was naming properly and using good version control
+https://github.com/marketplace/actions/build-and-push-docker-images - also helped me create and debug "secret-workflow.yml
