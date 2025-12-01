@@ -1,7 +1,7 @@
 # README-Cl.md
 **Part 1: Create a Docker Image**
 
-1. In the [Project4]](.) folder, added [web-content](web-content) from Project 3 with the following:
+1. In the [Project4](.) folder, added [web-content](web-content) from Project 3 with the following:
     - index.html
     - about.html
     - style.css
