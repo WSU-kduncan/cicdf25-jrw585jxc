@@ -2,9 +2,9 @@
 **Part 1: Create a Docker Image**
 
 1. In the [Project4](.) folder, added [web-content](web-content) from Project 3 with the following:
-    - index.html
-    - about.html
-    - style.css
+    - [index.html](web-content/index.html)
+    - [about.html](web-content/about.html)
+    - [style.css](web-content/style.css)
 
 I used generative AI to create a site with a star wars theme.
 
@@ -74,9 +74,9 @@ Tested and working
 
 Added versioning to [secret_workflow.yml](cicdf25-jrw585jxc/.github/workflows/secret_workflow.yml)
 
-1. To see tags in a git repository: git tag -n
-2. To generate a tag in a git repository: git tag -a vX.X.X -m "Version X.X.X"
-3. To push a tag in a git repository to GitHub: git push origin vX.X.X
+1. To see tags in a git repository: ```git tag -n```
+2. To generate a tag in a git repository: ```git tag -a vX.X.X -m "Version X.X.X"```
+3. To push a tag in a git repository to GitHub: ```git push origin vX.X.X```
 
 
 1. The workflow triggers on push
@@ -107,6 +107,10 @@ Docker correctly pulling major minor and latest
 ![images/Screenshot 2025-11-30 at 6.15.04 PM.png](<images/Screenshot 2025-11-30 at 6.15.04 PM.png>)
 
 https://hub.docker.com/repository/docker/jrw585jxc/project4/general
+
+You can test further by running the following.
+```docker pull jrw585jxc/project4:latest```
+```docker run -dit -p 80:80 jrw585jxc/project4:latest```
 
 
 **Part 4: Diagram**
