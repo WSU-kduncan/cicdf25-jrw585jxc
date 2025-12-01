@@ -25,6 +25,8 @@ Built and tagged a container image using my [Dockerfile](Dockerfile) as the buil
 
 Tested that the docker file pulled the files successfully
 
+*Note: I added an alias for quicker login as specified in Project 3*
+
 ![images/Screenshot 2025-11-30 at 5.50.51 PM.png](<images/Screenshot 2025-11-30 at 5.50.51 PM.png>)
 
 **Part 2: Create Docker Hub access token (PAT)/Add GitHub repository secrets**
@@ -55,7 +57,7 @@ Added GitHub repository secrets
 Built Workflow
 [secret_workflow.yml](../.github/workflows/secret_workflow.yml)
 
-*Note: if used in another repository, location of Dockerfile needs to be update in .yml to work with github actions*
+*Note: if used in another repository, location of Dockerfile needs to be updated in .yml to work with github actions*
 
 1. Logs in using github secrets
 
@@ -80,11 +82,11 @@ Added versioning to [secret_workflow.yml](cicdf25-jrw585jxc/.github/workflows/se
 1. The workflow triggers on push
 2. Then names the docker image according to the tags on latest push
 
-*Note: if used in another repository, location of Dockerfile needs to be update in .yml to work with github actions*
+*Note: if used in another repository, location of Dockerfile needs to be updated in .yml to work with github actions*
 
 3. You can test it by going to actions, and seeing if any errors or present. When clicking on the workflow, it shows all parts functioned.
 
-
+```
 on:
 push:
 tags:
@@ -94,7 +96,7 @@ tags: |
 type=semver,pattern=latest
 type=semver,pattern={{major}}
 type=semver,pattern={{major}}.{{minor}}
-
+```
 
 github command to tag and push tag
 ![images/Screenshot 2025-11-30 at 6.12.56 PM.png](<images/Screenshot 2025-11-30 at 6.12.56 PM.png>)
