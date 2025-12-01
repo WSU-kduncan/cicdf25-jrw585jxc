@@ -1,7 +1,7 @@
 # README-Cl.md
 **Part 1: Create a Docker Image**
 
-1. In the [Project4](cicdf25-jrw585jxc/Project 4) folder, added [web-content](cicdf25-jrw585jxc/Project 4/web-content) from Project 3 with the following:
+1. In the [Project4]](.) folder, added [web-content](web-content) from Project 3 with the following:
     - index.html
     - about.html
     - style.css
@@ -13,13 +13,13 @@ I used generative AI to create a site with a star wars theme.
 
 ![Screenshot 2025-11-14 at 4.37.12 PM.png](images/Screenshot_2025-11-14_at_4.37.12_PM.png)
 
-Created a [Dockerfile](cicdf25-jrw585jxc/Project 4/Dockerfile) with the following three instructions:
+Created a [Dockerfile](Dockerfile) with the following three instructions:
 
 - FROM httpd:2.4
 - COPY web-content/ /usr/local/apache2/htdocs/
 - EXPOSE 80
 
-Built and tagged a container image using my [Dockerfile](cicdf25-jrw585jxc/Project 4/Dockerfile) as the build instructions
+Built and tagged a container image using my [Dockerfile](Dockerfile) as the build instructions
 
 ![images/Screenshot 2025-11-30 at 5.54.59 PM.png](<images/Screenshot 2025-11-30 at 5.54.59 PM.png>)
 
