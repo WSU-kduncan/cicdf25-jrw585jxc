@@ -74,9 +74,9 @@ Tested and working
 
 Added versioning to [secret_workflow.yml](cicdf25-jrw585jxc/.github/workflows/secret_workflow.yml)
 
-1. To see tags in a git repository: git tag -n
-2. To generate a tag in a git repository: git tag -a vX.X.X -m "Version X.X.X"
-3. To push a tag in a git repository to GitHub: git push origin vX.X.X
+1. To see tags in a git repository: ```git tag -n```
+2. To generate a tag in a git repository: ```git tag -a vX.X.X -m "Version X.X.X"```
+3. To push a tag in a git repository to GitHub: ```git push origin vX.X.X```
 
 
 1. The workflow triggers on push
