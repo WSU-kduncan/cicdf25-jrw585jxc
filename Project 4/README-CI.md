@@ -108,6 +108,10 @@ Docker correctly pulling major minor and latest
 
 https://hub.docker.com/repository/docker/jrw585jxc/project4/general
 
+You can test further by running the following.
+```docker pull jrw585jxc/project4:latest```
+```docker run -dit -p 80:80 jrw585jxc/project4:latest```
+
 
 **Part 4: Diagram**
 
@@ -115,9 +119,6 @@ https://hub.docker.com/repository/docker/jrw585jxc/project4/general
 
 
 **Citations / resources used**
-
-No additional resources were used outside of perplexity in project3 for generation of the html/css. Used various resources linked in the github for the project, mostly those listed below.
-
 https://github.com/docker/metadata-action?tab=readme-ov-file#semver - helped me create and debug "secret-workflow.yml
 https://semver.org/ - Helped ensure I was naming properly and using good version control
 https://github.com/marketplace/actions/build-and-push-docker-images - also helped me create and debug "secret-workflow.yml
