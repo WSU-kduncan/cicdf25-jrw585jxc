@@ -109,12 +109,7 @@ https://hub.docker.com/repository/docker/jrw585jxc/project4/general
 
 **Part 4: Diagram**
 
-
-
-
-
-
-
+![Untitled.jpg](images/Untitled.jpg)
 
 
 **Citations / resources used**
