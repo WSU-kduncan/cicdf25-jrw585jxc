@@ -1,4 +1,13 @@
 # README-Cl.md
+
+**Overview**
+
+The goal of this project is to learn to containerize a web application with docker, as was the purpose of Project 3, with the addition of setting up continuous integration and semantic versioning based on GitHub tags. 
+
+Throughout this project you will learn to use GitHub Actions to automatically update Docker hub repos based on pushes from your git repo.
+
+In short, this project aims to develop your skills in version control and automation of that version control, in this case the version control of docker containers in reference to a related GitHub repo.
+
 **Part 1: Create a Docker Image**
 
 1. In the [Project4](.) folder, added [web-content](web-content) from Project 3 with the following:
