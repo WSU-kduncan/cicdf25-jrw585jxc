@@ -1,0 +1,169 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Project 5 Part 1 - EC2 t2.medium with Docker for continuous deployment'
+
+Parameters:
+  KeyName:
+    Description: 'Name of an existing EC2 KeyPair for SSH access'
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    Default: vockey
+  DockerHubImage:
+    Description: 'Your DockerHub image (ex: jrw585jxc/project4:latest)'
+    Type: String
+    Default: jrw585jxc/project4:latest
+
+Mappings:
+  AWSRegionAMI:
+    us-east-1:
+      HVM64: ami-053b0d53c279acc90
+
+Resources:
+  VPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: Project5-VPC
+
+  InternetGateway:
+    Type: 'AWS::EC2::InternetGateway'
+    Properties:
+      Tags:
+        - Key: Name
+          Value: Project5-IGW
+
+  AttachGateway:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  PublicSubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: Project5-PublicSubnet
+
+  PublicRouteTable:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: Project5-PublicRT
+
+  PublicRouteToIG:
+    Type: 'AWS::EC2::Route'
+    DependsOn: AttachGateway
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  PublicSubnetRouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref PublicSubnet
+      RouteTableId: !Ref PublicRouteTable
+
+  Project5SecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: 'Project 5 - SSH + HTTP + Webhook'
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 69.61.173.83/32
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 130.108.0.0/16
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 9000
+          ToPort: 9000
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: Project5-SG
+
+  Project5EC2:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: !FindInMap [AWSRegionAMI, !Ref 'AWS::Region', HVM64]
+      InstanceType: t2.medium
+      KeyName: !Ref KeyName
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 30
+            VolumeType: gp3
+            DeleteOnTermination: true
+      Tags:
+        - Key: Name
+          Value: Project5-AppServer
+      NetworkInterfaces:
+        - DeviceIndex: '0'
+          SubnetId: !Ref PublicSubnet
+          GroupSet: [!Ref Project5SecurityGroup]
+          DeleteOnTermination: true
+      UserData:
+        Fn::Base64:
+          Fn::Join:
+            - "\n"
+            - - "#!/bin/bash -xe"
+              - "apt-get update -y && apt-get upgrade -y"
+              - "apt-get install -y ca-certificates curl gnupg lsb-release"
+              - "mkdir -p /etc/apt/keyrings"
+              - "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg"
+              - "chmod a+r /etc/apt/keyrings/docker.gpg"
+              - "echo \"deb [arch=\\$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \\$(lsb_release -cs) stable\" | tee /etc/apt/sources.list.d/docker.list > /dev/null"
+              - "apt-get update -y"
+              - "apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin"
+              - "usermod -aG docker ubuntu"
+              - "docker run --rm hello-world"
+              - !Sub "docker pull ${DockerHubImage}"
+              - !Sub "docker run -d --name project5 --restart unless-stopped -p 80:80 ${DockerHubImage}"
+              - "mkdir -p /home/ubuntu/deployment"
+              - "chown ubuntu:ubuntu /home/ubuntu/deployment"
+              - "cat > /home/ubuntu/deployment/refresh.sh << 'EOF'"
+              - "#!/usr/bin/env bash"
+              - "set -e"
+              - ""
+              - "IMAGE=\"\\${DOCKERHUB_IMAGE:-jrw585jxc/project4:latest}\""
+              - "CONTAINER_NAME=\"project5\""
+              - ""
+              - "docker stop \"\\$CONTAINER_NAME\" || true"
+              - "docker rm \"\\$CONTAINER_NAME\" || true"
+              - ""
+              - "docker pull \"\\$IMAGE\""
+              - ""
+              - "docker run -d \\"
+              - "  --name \"\\$CONTAINER_NAME\" \\"
+              - "  --restart unless-stopped \\"
+              - "  -p 80:80 \\"
+              - "  \"\\$IMAGE\""
+              - "EOF"
+              - "chmod +x /home/ubuntu/deployment/refresh.sh"
+              - "chown ubuntu:ubuntu /home/ubuntu/deployment/refresh.sh"
+              - "hostnamectl set-hostname project5-server"
+
+Outputs:
+  EC2PublicIP:
+    Description: 'Public IP of Project 5 EC2'
+    Value: !Sub '${Project5EC2.PublicIp}'
+  RefreshScriptPath:
+    Description: 'Path to refresh script on EC2'
+    Value: /home/ubuntu/deployment/refresh.sh

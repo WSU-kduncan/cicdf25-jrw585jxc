@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(ellipse at center, #0a1a2f 0%, #000 100%);
+    color: #feda4a; /* Star Wars crawl yellow */
+    font-family: 'Star Wars', 'Pathway Gothic One', 'Arial', sans-serif;
+    min-height: 100vh;
+}
+
+.starwars-logo {
+    font-family: 'Star Wars', 'Arial Black', Arial, sans-serif;
+    font-size: 3rem;
+    color: #ffe81f;
+    text-shadow: 0 0 10px #ffe81f, 0 0 20px #000, 2px 2px 3px #333;
+    letter-spacing: 8px;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2.2rem;
+    color: #ffe81f;
+    text-shadow: 0 0 5px #ffe81f;
+    text-align: center;
+}
+
+p, a {
+    color: #feda4a;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: #37affc;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #ffe81f;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+    opacity: 0.3;
+    z-index: 0;
+}

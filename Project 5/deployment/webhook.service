@@ -1,0 +1,17 @@
+[Unit]
+Description=Webhook listener for Project 5 CD
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/deployment
+ExecStart=/usr/local/bin/webhook -hooks /home/ubuntu/deployment/hooks.json -verbose -port 9000
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

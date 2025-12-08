@@ -1,0 +1,7 @@
+[
+  {
+    "id": "deploy-project5",
+    "execute-command": "/home/ubuntu/deployment/refresh.sh",
+    "command-working-directory": "/home/ubuntu/deployment",
+  }
+]
