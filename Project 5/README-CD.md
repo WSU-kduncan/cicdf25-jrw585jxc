@@ -395,7 +395,7 @@ docker ps#shows the refreshed project5 container
 
 ---
 
-**LINK to definition file, ![hooks.json](images/Screenshot_2025-12-07_at_2.17.14_PM.png)**
+**LINK to definition file, [hooks.json](deployment/hooks.json)**
 
 **LINK to service file. [webhook.service](deployment/webhook.service)**
 
